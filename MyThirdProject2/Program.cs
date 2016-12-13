@@ -30,7 +30,7 @@ namespace MyThirdProject2
                 Console.WriteLine("2. Insert into table.");
                 Console.WriteLine("3. Delete from table.");
                 Console.WriteLine("4. Update in table.");
-                Console.WriteLine("5. Custom Insert.");
+                Console.WriteLine("5. Custom functions.");
                 Console.WriteLine("6. Exit.");
                 control = Convert.ToInt32(Console.ReadLine());
                 switch (control)
@@ -228,8 +228,22 @@ namespace MyThirdProject2
                         }
                         else if (control == 3)
                         {
+                            Console.WriteLine("Id to Delete:");
+                            int temp = Convert.ToInt32(Console.ReadLine());
+                            context.Players.Remove(context.Players.FirstOrDefault(x => x.Id == temp));
+
+                            context.SaveChanges();
+
+                            Console.WriteLine("Data deleted!");
                         }
                         else {
+                            Console.WriteLine("Id to Delete:");
+                            int temp = Convert.ToInt32(Console.ReadLine());
+                            context.Scores.Remove(context.Scores.FirstOrDefault(x => x.Id == temp));
+
+                            context.SaveChanges();
+
+                            Console.WriteLine("Data deleted!");
                         }
                         break;
                     case 4:
@@ -300,8 +314,26 @@ namespace MyThirdProject2
                         }
                         else if (control == 3)
                         {
+                            Console.WriteLine("Id to Update:");
+                            int temp = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Update Nickname:");
+                            context.Players.FirstOrDefault(x => x.Id == temp).Nickname = Console.ReadLine();
+
+                            context.SaveChanges();
+
+                            Console.WriteLine("Data updated!");
                         }
                         else {
+                            Console.WriteLine("Id to update:");
+                            int temp = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Update Score Count:");
+                            context.Scores.FirstOrDefault(x => x.Id == temp).Count = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Update Time:");
+                            context.Scores.FirstOrDefault(x => x.Id == temp).Time = Convert.ToInt32(Console.ReadLine());
+
+                            context.SaveChanges();
+
+                            Console.WriteLine("Data updated!");
                         }
                         break;
                     case 5:
