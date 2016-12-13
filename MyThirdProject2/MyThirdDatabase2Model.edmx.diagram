@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f54a3bc862594c69a94969f147b1ddea" Name="Diagram1" >
+        <EntityTypeShape EntityType="MyThirdDatabase2Model.Platform" Width="1.5" PointX="0.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyThirdDatabase2Model.Game" Width="1.5" PointX="4.625" PointY="0.625" />
+        <EntityTypeShape EntityType="MyThirdDatabase2Model.Score" Width="1.5" PointX="4.625" PointY="3.5" />
+        <EntityTypeShape EntityType="MyThirdDatabase2Model.Player" Width="1.5" PointX="2.625" PointY="3.5" />
+        <EntityTypeShape EntityType="MyThirdDatabase2Model.User_Information" Width="1.5" PointX="0.5" PointY="3.5" />
+        <AssociationConnector Association="MyThirdDatabase2Model.PlatformGame" />
+        <AssociationConnector Association="MyThirdDatabase2Model.GameScore" />
+        <AssociationConnector Association="MyThirdDatabase2Model.PlayerScore" />
+        <AssociationConnector Association="MyThirdDatabase2Model.PlayerUser_Information" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

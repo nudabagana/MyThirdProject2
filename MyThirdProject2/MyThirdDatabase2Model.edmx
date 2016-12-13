@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyThirdDatabase2Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MyThirdDatabase2ModelStoreContainer">
+    <EntitySet Name="Platforms" EntityType="MyThirdDatabase2Model.Store.Platforms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Games" EntityType="MyThirdDatabase2Model.Store.Games" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Scores" EntityType="MyThirdDatabase2Model.Store.Scores" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Players" EntityType="MyThirdDatabase2Model.Store.Players" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User_Information" EntityType="MyThirdDatabase2Model.Store.User_Information" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlatformGame" EntityType="MyThirdDatabase2Model.Store.PlatformGame" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_PlatformGame_Platform" Association="MyThirdDatabase2Model.Store.FK_PlatformGame_Platform">
+      <End Role="Platform" EntitySet="Platforms" />
+      <End Role="PlatformGame" EntitySet="PlatformGame" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlatformGame_Game" Association="MyThirdDatabase2Model.Store.FK_PlatformGame_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="PlatformGame" EntitySet="PlatformGame" />
+    </AssociationSet>
+    <AssociationSet Name="GameScore" Association="MyThirdDatabase2Model.Store.GameScore">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="Score" EntitySet="Scores" />
+    </AssociationSet>
+    <AssociationSet Name="PlayerScore" Association="MyThirdDatabase2Model.Store.PlayerScore">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="Score" EntitySet="Scores" />
+    </AssociationSet>
+    <AssociationSet Name="PlayerUser_Information" Association="MyThirdDatabase2Model.Store.PlayerUser_Information">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="User_Information" EntitySet="User_Information" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Platforms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Device" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="OS" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Games">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Publisher" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Release_Year" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Scores">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="Time" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="PlayerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Players">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nickname" Type="nvarchar" Nullable="false" MaxLength="24" />
+    <Property Name="PlayerUser_Information_Player_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_Information">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Country" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="First_Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Last_Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Year" Type="smallint" Nullable="false" />
+    <Property Name="Month" Type="smallint" Nullable="false" />
+    <Property Name="Day" Type="smallint" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlatformGame">
+    <Key>
+      <PropertyRef Name="Platforms_Id" />
+      <PropertyRef Name="Games_Id" />
+    </Key>
+    <Property Name="Platforms_Id" Type="int" Nullable="false" />
+    <Property Name="Games_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="GameScore">
+    <End Role="Game" Type="MyThirdDatabase2Model.Store.Games" Multiplicity="1" />
+    <End Role="Score" Type="MyThirdDatabase2Model.Store.Scores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlayerScore">
+    <End Role="Player" Type="MyThirdDatabase2Model.Store.Players" Multiplicity="1" />
+    <End Role="Score" Type="MyThirdDatabase2Model.Store.Scores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="PlayerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlayerUser_Information">
+    <End Role="Player" Type="MyThirdDatabase2Model.Store.Players" Multiplicity="*" />
+    <End Role="User_Information" Type="MyThirdDatabase2Model.Store.User_Information" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User_Information">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Player">
+        <PropertyRef Name="PlayerUser_Information_Player_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlatformGame_Platform">
+    <End Role="Platform" Type="MyThirdDatabase2Model.Store.Platforms" Multiplicity="1" />
+    <End Role="PlatformGame" Type="MyThirdDatabase2Model.Store.PlatformGame" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Platform">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PlatformGame">
+        <PropertyRef Name="Platforms_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlatformGame_Game">
+    <End Role="PlatformGame" Type="MyThirdDatabase2Model.Store.PlatformGame" Multiplicity="*" />
+    <End Role="Game" Type="MyThirdDatabase2Model.Store.Games" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PlatformGame">
+        <PropertyRef Name="Games_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MyThirdDatabase2Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MyThirdDatabase2ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Platforms" EntityType="MyThirdDatabase2Model.Platform" />
+          <EntitySet Name="Games" EntityType="MyThirdDatabase2Model.Game" />
+          <EntitySet Name="Scores" EntityType="MyThirdDatabase2Model.Score" />
+          <EntitySet Name="Players" EntityType="MyThirdDatabase2Model.Player" />
+          <EntitySet Name="User_Information" EntityType="MyThirdDatabase2Model.User_Information" />
+          <AssociationSet Name="PlatformGame" Association="MyThirdDatabase2Model.PlatformGame">
+            <End Role="Platform" EntitySet="Platforms" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="GameScore" Association="MyThirdDatabase2Model.GameScore">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Score" EntitySet="Scores" />
+          </AssociationSet>
+          <AssociationSet Name="PlayerScore" Association="MyThirdDatabase2Model.PlayerScore">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Score" EntitySet="Scores" />
+          </AssociationSet>
+          <AssociationSet Name="PlayerUser_Information" Association="MyThirdDatabase2Model.PlayerUser_Information">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="User_Information" EntitySet="User_Information" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Platform">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Device" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="OS" Type="String" Nullable="false" MaxLength="100" />
+          <NavigationProperty Name="Games" Relationship="MyThirdDatabase2Model.PlatformGame" FromRole="Platform" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="Publisher" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="Release_Year" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Platforms" Relationship="MyThirdDatabase2Model.PlatformGame" FromRole="Game" ToRole="Platform" />
+          <NavigationProperty Name="Scores" Relationship="MyThirdDatabase2Model.GameScore" FromRole="Game" ToRole="Score" />
+        </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="MyThirdDatabase2Model.GameScore" FromRole="Score" ToRole="Game" />
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="MyThirdDatabase2Model.PlayerScore" FromRole="Score" ToRole="Player" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nickname" Type="String" Nullable="false" MaxLength="24" />
+          <NavigationProperty Name="Scores" Relationship="MyThirdDatabase2Model.PlayerScore" FromRole="Player" ToRole="Score" />
+        </EntityType>
+        <EntityType Name="User_Information">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="First_Name" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="Last_Name" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="Month" Type="Int16" Nullable="false" />
+          <Property Name="Day" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="MyThirdDatabase2Model.PlayerUser_Information" FromRole="User_Information" ToRole="Player" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="PlatformGame">
+          <End Type="MyThirdDatabase2Model.Platform" Role="Platform" Multiplicity="*" />
+          <End Type="MyThirdDatabase2Model.Game" Role="Game" Multiplicity="*" />
+        </Association>
+        <Association Name="GameScore">
+          <End Type="MyThirdDatabase2Model.Game" Role="Game" Multiplicity="1" />
+          <End Type="MyThirdDatabase2Model.Score" Role="Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PlayerScore">
+          <End Type="MyThirdDatabase2Model.Player" Role="Player" Multiplicity="1" />
+          <End Type="MyThirdDatabase2Model.Score" Role="Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PlayerUser_Information">
+          <End Type="MyThirdDatabase2Model.Player" Role="Player" Multiplicity="1" />
+          <End Type="MyThirdDatabase2Model.User_Information" Role="User_Information" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyThirdDatabase2ModelStoreContainer" CdmEntityContainer="MyThirdDatabase2ModelContainer">
+    <EntitySetMapping Name="Platforms">
+      <EntityTypeMapping TypeName="IsTypeOf(MyThirdDatabase2Model.Platform)">
+        <MappingFragment StoreEntitySet="Platforms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Device" ColumnName="Device" />
+          <ScalarProperty Name="OS" ColumnName="OS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="IsTypeOf(MyThirdDatabase2Model.Game)">
+        <MappingFragment StoreEntitySet="Games">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+          <ScalarProperty Name="Release_Year" ColumnName="Release_Year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Scores">
+      <EntityTypeMapping TypeName="IsTypeOf(MyThirdDatabase2Model.Score)">
+        <MappingFragment StoreEntitySet="Scores">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="IsTypeOf(MyThirdDatabase2Model.Player)">
+        <MappingFragment StoreEntitySet="Players">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Information">
+      <EntityTypeMapping TypeName="IsTypeOf(MyThirdDatabase2Model.User_Information)">
+        <MappingFragment StoreEntitySet="User_Information">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="PlatformGame" TypeName="MyThirdDatabase2Model.PlatformGame" StoreEntitySet="PlatformGame">
+      <EndProperty Name="Platform">
+        <ScalarProperty Name="Id" ColumnName="Platforms_Id" />
+      </EndProperty>
+      <EndProperty Name="Game">
+        <ScalarProperty Name="Id" ColumnName="Games_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PlayerUser_Information" TypeName="MyThirdDatabase2Model.PlayerUser_Information" StoreEntitySet="Players">
+      <EndProperty Name="User_Information">
+        <ScalarProperty Name="Id" ColumnName="PlayerUser_Information_Player_Id" />
+      </EndProperty>
+      <EndProperty Name="Player">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
