@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/13/2016 22:06:43
+-- Date Created: 12/14/2016 01:07:51
 -- Generated from EDMX file: C:\See Sharp\MyThirdProject2\MyThirdProject2\MyThirdDatabase2Model.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,44 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_GameScore]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Scores] DROP CONSTRAINT [FK_GameScore];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PlatformGame_Game]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PlatformGame] DROP CONSTRAINT [FK_PlatformGame_Game];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PlatformGame_Platform]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PlatformGame] DROP CONSTRAINT [FK_PlatformGame_Platform];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PlayerScore]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Scores] DROP CONSTRAINT [FK_PlayerScore];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PlayerUser_Information]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Players] DROP CONSTRAINT [FK_PlayerUser_Information];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Games]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Games];
+GO
+IF OBJECT_ID(N'[dbo].[PlatformGame]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PlatformGame];
+GO
+IF OBJECT_ID(N'[dbo].[Platforms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Platforms];
+GO
+IF OBJECT_ID(N'[dbo].[Players]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Players];
+GO
+IF OBJECT_ID(N'[dbo].[Scores]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Scores];
+GO
+IF OBJECT_ID(N'[dbo].[User_Information]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[User_Information];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -57,8 +90,7 @@ GO
 -- Creating table 'Players'
 CREATE TABLE [dbo].[Players] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Nickname] nvarchar(24)  NOT NULL,
-    [PlayerUser_Information_Player_Id] int  NOT NULL
+    [Nickname] nvarchar(24)  NOT NULL
 );
 GO
 
@@ -70,7 +102,8 @@ CREATE TABLE [dbo].[User_Information] (
     [Year] smallint  NOT NULL,
     [Month] smallint  NOT NULL,
     [Day] smallint  NOT NULL,
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Player_Id] int  NOT NULL
 );
 GO
 
@@ -179,19 +212,19 @@ ON [dbo].[Scores]
     ([PlayerId]);
 GO
 
--- Creating foreign key on [PlayerUser_Information_Player_Id] in table 'Players'
-ALTER TABLE [dbo].[Players]
+-- Creating foreign key on [Player_Id] in table 'User_Information'
+ALTER TABLE [dbo].[User_Information]
 ADD CONSTRAINT [FK_PlayerUser_Information]
-    FOREIGN KEY ([PlayerUser_Information_Player_Id])
-    REFERENCES [dbo].[User_Information]
+    FOREIGN KEY ([Player_Id])
+    REFERENCES [dbo].[Players]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PlayerUser_Information'
 CREATE INDEX [IX_FK_PlayerUser_Information]
-ON [dbo].[Players]
-    ([PlayerUser_Information_Player_Id]);
+ON [dbo].[User_Information]
+    ([Player_Id]);
 GO
 
 -- --------------------------------------------------
