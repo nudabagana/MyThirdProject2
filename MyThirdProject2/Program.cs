@@ -337,6 +337,46 @@ namespace MyThirdProject2
                         }
                         break;
                     case 5:
+                        Console.WriteLine("Choose function:");
+                        Console.WriteLine("1. See 2nd and 3rd highest scores");
+                        Console.WriteLine("2. See how many scores player has");
+                        Console.WriteLine("3. See player name and Score");
+                        control = Convert.ToInt32(Console.ReadLine());
+                        if (control == 1) {
+                            var winners = context.Scores.ToList();
+                            winners.Sort((x, y) => y.Count.CompareTo(x.Count));
+                            foreach (var winner in winners.Skip(1).Take(2))
+                            {
+                                Console.WriteLine($"{winner.Count} ");
+                            }
+                        }
+                        else if (control == 2)
+                        {
+                            Console.WriteLine("Select player nickname:");
+                            string temp = Console.ReadLine();
+                            var everything = from scor in context.Scores
+                                               join play in context.Players on scor.PlayerId equals play.Id
+                                               select new { Name = play.Nickname, Score = scor.Count };
+                            var playerScores = from scores in everything
+                                                group scores.Score by scores.Name into allscores
+                                                select new { Name = allscores.Key, Count = allscores.ToList().Count};
+
+                            foreach (var player in playerScores)
+                            {
+                                Console.WriteLine($"{player.Name} | {player.Count} ");
+                            }
+                        }
+                        else
+                        {
+                            var everything = from scor in context.Scores
+                                            join play in context.Players on scor.PlayerId equals play.Id
+                                            select new { Name = play.Nickname, Score = scor.Count };
+                            Console.WriteLine("Player Name  |  Score");
+                            foreach ( var e in everything)
+                            {
+                                Console.WriteLine($"{e.Name} | {e.Score} ");
+                            }
+                        }
                         break;
                     case 6:
                         connection.Close();
