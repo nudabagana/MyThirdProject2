@@ -288,5 +288,23 @@ namespace MyThirdProject2
             return list;
         }
 
+        public List<string> ReturnTopPlatforms()
+        {
+            List<string> list = new List<string>();
+            var platforms = context.Platforms.ToList();
+            platforms.Sort((x, y) => y.Games.Count.CompareTo(x.Games.Count));
+
+            //for(int i = 0; i < 5; i++)
+            //{
+            //    list.Add($"{platforms[i].Id} | {platforms[i].Device} | {platforms[i].OS} | {platforms[i].Games.Count}");
+            //}
+            foreach (var plat in platforms.Take(5))
+            {
+                list.Add($"{plat.Id} | {plat.Device} | {plat.OS} | {plat.Games.Count}");
+            }
+
+            return list;
+        }
+
     }
 }
