@@ -26,21 +26,20 @@ namespace MyThirdProject2
             {
                 control = 0;
                 Console.WriteLine("Hello, this is Score DB manager. Please choose an action:");
-                Console.WriteLine("1. View table contents.");
-                Console.WriteLine("2. Insert into table.");
-                Console.WriteLine("3. Delete from table.");
-                Console.WriteLine("4. Update in table.");
+                Console.WriteLine("1. Overview...");
+                Console.WriteLine("2. Add new...");
+                Console.WriteLine("3. Remove existing...");
+                Console.WriteLine("4. Change...");
                 Console.WriteLine("5. Custom functions.");
                 Console.WriteLine("6. Exit.");
                 control = Convert.ToInt32(Console.ReadLine());
                 switch (control)
                 {
                     case 1:
-                        Console.WriteLine("Choose table:");
-                        Console.WriteLine("1. Games");
-                        Console.WriteLine("2. Platforms");
-                        Console.WriteLine("3. Players");
-                        Console.WriteLine("4. Scores");
+                        Console.WriteLine("1. All Players");
+                        Console.WriteLine("2. All Platforms");
+                        Console.WriteLine("3. All Players");
+                        Console.WriteLine("4. All Scores");
                         control = Convert.ToInt32(Console.ReadLine());
                         if (control == 1)
                         {
@@ -86,11 +85,10 @@ namespace MyThirdProject2
                         }
                         break;
                     case 2:
-                        Console.WriteLine("Choose table:");
-                        Console.WriteLine("1. Games");
-                        Console.WriteLine("2. Platforms");
-                        Console.WriteLine("3. Players");
-                        Console.WriteLine("4. Scores");
+                        Console.WriteLine("1. Game");
+                        Console.WriteLine("2. Platform");
+                        Console.WriteLine("3. Player");
+                        Console.WriteLine("4. Score");
                         control = Convert.ToInt32(Console.ReadLine());
                         if (control == 1)
                         {
@@ -109,16 +107,16 @@ namespace MyThirdProject2
                             dataAdapter.Fill(dataset, "Games");
 
                             DataRow row = dataset.Tables[0].NewRow();
-                            Console.WriteLine("Insert Name:");
+                            Console.WriteLine("Choose Name:");
                             row["Name"] = Console.ReadLine();
-                            Console.WriteLine("Insert Publisher:");
+                            Console.WriteLine("Choose Publisher:");
                             row["Publisher"] = Console.ReadLine();
-                            Console.WriteLine("Insert Release_Year:");
+                            Console.WriteLine("Choose Release_Year:");
                             row["Release_Year"] = Convert.ToInt32(Console.ReadLine());
                             dataset.Tables[0].Rows.Add(row);
                             dataAdapter.Update(dataset.Tables[0]);
 
-                            Console.WriteLine("Data inserted!");
+                            //Console.WriteLine("Data inserted!");
                         }
                         else if (control == 2)
                         {
@@ -136,49 +134,48 @@ namespace MyThirdProject2
                             dataAdapter.Fill(dataset, "Platforms");
 
                             DataRow row = dataset.Tables[0].NewRow();
-                            Console.WriteLine("Insert Device:");
+                            Console.WriteLine("Choose Device:");
                             row["Device"] = Console.ReadLine();
-                            Console.WriteLine("Insert Os:");
+                            Console.WriteLine("Choose Os:");
                             row["Os"] = Console.ReadLine();
                             dataset.Tables[0].Rows.Add(row);
                             dataAdapter.Update(dataset.Tables[0]);
 
-                            Console.WriteLine("Data inserted!");
+                            //Console.WriteLine("Data inserted!");
                         }
                         else if (control == 3)
                         {
                             Player player = new Player();
-                            Console.WriteLine("Insert Nickname:");
+                            Console.WriteLine("Choose Nickname:");
                             player.Nickname = Console.ReadLine();
 
                             context.Players.Add(player);
                             context.SaveChanges();
 
-                            Console.WriteLine("Data inserted!");
+                            //Console.WriteLine("Data inserted!");
                         }
                         else {
                             Score score = new Score();
-                            Console.WriteLine("Insert Count:");
+                            Console.WriteLine("Choose Count:");
                             score.Count = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Insert Time:");
+                            Console.WriteLine("Choose Time:");
                             score.Time = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Insert Game Id:");
+                            Console.WriteLine("Choose Game Id:");
                             score.GameId = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Insert Player Id:");
+                            Console.WriteLine("Choose Player Id:");
                             score.PlayerId = Convert.ToInt32(Console.ReadLine());
 
                             context.Scores.Add(score);
                             context.SaveChanges();
 
-                            Console.WriteLine("Data inserted!");
+                           // Console.WriteLine("Data inserted!");
                         }
                         break;
                     case 3:
-                        Console.WriteLine("Choose table:");
-                        Console.WriteLine("1. Games");
-                        Console.WriteLine("2. Platforms");
-                        Console.WriteLine("3. Players");
-                        Console.WriteLine("4. Scores");
+                        Console.WriteLine("1. Game");
+                        Console.WriteLine("2. Platform");
+                        Console.WriteLine("3. Player");
+                        Console.WriteLine("4. Score");
                         control = Convert.ToInt32(Console.ReadLine());
                         if (control == 1)
                         {
@@ -196,12 +193,12 @@ namespace MyThirdProject2
                             dataAdapter.Fill(dataset, "Games");
                             dataset.Tables[0].PrimaryKey = new[] { dataset.Tables[0].Columns["Id"] };
 
-                            Console.WriteLine("Id to Delete:");
+                            Console.WriteLine("Choose Id to Remove:");
                             int temp = Convert.ToInt32(Console.ReadLine());
                             dataset.Tables[0].Rows.Find(temp).Delete();
 
                             dataAdapter.Update(dataset.Tables[0]);
-                            Console.WriteLine("Data deleted!");
+                            //Console.WriteLine("Data deleted!");
                         }
                         else if (control == 2)
                         {
@@ -219,31 +216,31 @@ namespace MyThirdProject2
                             dataAdapter.Fill(dataset, "Platforms");
                             dataset.Tables[0].PrimaryKey = new[] { dataset.Tables[0].Columns["Id"] };
 
-                            Console.WriteLine("Id to Delete:");
+                            Console.WriteLine("Choose Id to Remove:");
                             int temp = Convert.ToInt32(Console.ReadLine());
                             dataset.Tables[0].Rows.Find(temp).Delete();
 
                             dataAdapter.Update(dataset.Tables[0]);
-                            Console.WriteLine("Data deleted!");
+                            //Console.WriteLine("Data deleted!");
                         }
                         else if (control == 3)
                         {
-                            Console.WriteLine("Id to Delete:");
+                            Console.WriteLine("Choose Id to Remove:");
                             int temp = Convert.ToInt32(Console.ReadLine());
                             context.Players.Remove(context.Players.FirstOrDefault(x => x.Id == temp));
 
                             context.SaveChanges();
 
-                            Console.WriteLine("Data deleted!");
+                            //Console.WriteLine("Data deleted!");
                         }
                         else {
-                            Console.WriteLine("Id to Delete:");
+                            Console.WriteLine("Choose Id to Remove:");
                             int temp = Convert.ToInt32(Console.ReadLine());
                             context.Scores.Remove(context.Scores.FirstOrDefault(x => x.Id == temp));
 
                             context.SaveChanges();
 
-                            Console.WriteLine("Data deleted!");
+                            //Console.WriteLine("Data deleted!");
                         }
                         break;
                     case 4:
@@ -272,17 +269,17 @@ namespace MyThirdProject2
                             dataAdapter.Fill(dataset, "Games");
                             dataset.Tables[0].PrimaryKey = new[] { dataset.Tables[0].Columns["Id"] };
 
-                            Console.WriteLine("Id to Update:");
+                            Console.WriteLine("Id to Change:");
                             int temp = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Update Name:");
+                            Console.WriteLine("New Name:");
                             dataset.Tables[0].Rows.Find(temp)["Name"] = Console.ReadLine();
-                            Console.WriteLine("Update Publisher:");
+                            Console.WriteLine("New Publisher:");
                             dataset.Tables[0].Rows.Find(temp)["Publisher"] = Console.ReadLine();
-                            Console.WriteLine("Update Release_Year:");
+                            Console.WriteLine("New Release_Year:");
                             dataset.Tables[0].Rows.Find(temp)["Release_Year"] = Convert.ToInt32(Console.ReadLine());
                         
                             dataAdapter.Update(dataset.Tables[0]);
-                            Console.WriteLine("Data updated!");
+                            //Console.WriteLine("Data updated!");
                         }
                         else if (control == 2)
                         {
@@ -302,38 +299,38 @@ namespace MyThirdProject2
                             dataAdapter.Fill(dataset, "Platforms");
                             dataset.Tables[0].PrimaryKey = new[] { dataset.Tables[0].Columns["Id"] };
 
-                            Console.WriteLine("Id to Update:");
+                            Console.WriteLine("Id to Change:");
                             int temp = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Update Device:");
+                            Console.WriteLine("New Device:");
                             dataset.Tables[0].Rows.Find(temp)["Device"] = Console.ReadLine();
-                            Console.WriteLine("Update Os:");
+                            Console.WriteLine("New Os:");
                             dataset.Tables[0].Rows.Find(temp)["Os"] = Console.ReadLine();
 
                             dataAdapter.Update(dataset.Tables[0]);
-                            Console.WriteLine("Data updated!");
+                            //Console.WriteLine("Data updated!");
                         }
                         else if (control == 3)
                         {
-                            Console.WriteLine("Id to Update:");
+                            Console.WriteLine("Id to Change:");
                             int temp = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Update Nickname:");
                             context.Players.FirstOrDefault(x => x.Id == temp).Nickname = Console.ReadLine();
 
                             context.SaveChanges();
 
-                            Console.WriteLine("Data updated!");
+                            //Console.WriteLine("Data updated!");
                         }
                         else {
-                            Console.WriteLine("Id to update:");
+                            Console.WriteLine("Id to Change:");
                             int temp = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Update Score Count:");
+                            Console.WriteLine("New Score Count:");
                             context.Scores.FirstOrDefault(x => x.Id == temp).Count = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Update Time:");
+                            Console.WriteLine("New Time:");
                             context.Scores.FirstOrDefault(x => x.Id == temp).Time = Convert.ToInt32(Console.ReadLine());
 
                             context.SaveChanges();
 
-                            Console.WriteLine("Data updated!");
+                            //Console.WriteLine("Data updated!");
                         }
                         break;
                     case 5:
