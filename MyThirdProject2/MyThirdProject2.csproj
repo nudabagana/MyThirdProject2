@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataController.cs" />
     <Compile Include="Game.cs">
       <DependentUpon>MyThirdDatabase2Model.tt</DependentUpon>
     </Compile>
@@ -93,7 +94,7 @@
     <Compile Include="Player.cs">
       <DependentUpon>MyThirdDatabase2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="UIController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Score.cs">
       <DependentUpon>MyThirdDatabase2Model.tt</DependentUpon>
